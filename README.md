@@ -1,27 +1,41 @@
 # Andrew's Portfolio
 
-This repository contains the source code for Andrew's portfolio website. The website is designed to showcase professional work, projects, skills, and more, all wrapped in a modern, responsive design.
+This repository contains the source code for Andrew's portfolio website—a modern, responsive site designed to showcase professional work, projects, skills, and more.
 
 ## Live Demo
 
-You can view the live portfolio at: [portfolio.drewedev.com](https://portfolio.drewedev.com)
+View the live portfolio at: [portfolio.drewedev.com](https://portfolio.drewedev.com)
 
 ## Features
 
-- **Responsive Design:** Built with Tailwind CSS to ensure the site looks great on all devices.
-- **Fixed Navigation Bar:** Easy access to different sections (Home, Introduction, Resume, Skills, Projects, Contact).
-- **Smooth Scrolling:** Enjoy smooth transitions when navigating between sections.
-- **Animated Section Transitions:** Elements animate into view as you scroll.
-- **Modern UI Components:** Integrated Flowbite for additional UI functionality.
-- **Contact Form:** A simple, styled form to get in touch.
+- **Responsive & Modern Design:**  
+  Built with Tailwind CSS to deliver a sleek, responsive layout that adapts across all devices.
+  
+- **Fixed Navigation Bar:**  
+  Navigate seamlessly through sections like Home, Introduction, Resume, Skills, Projects, and Contact.
+  
+- **Smooth Scrolling & Animated Transitions:**  
+  Enjoy smooth scroll behavior with elements that animate into view as you navigate the page.
+  
+- **Enhanced UI Components:**  
+  Integrated with Flowbite for additional UI elements and functionality.
+  
+- **Interactive Contact Form:**  
+  A fully functional contact form powered by EmailJS that sends messages directly from the site.
+  
+- **Custom Notifications:**  
+  Styled, in-page notifications inform users of successful submissions or errors when sending messages.
+  
+- **Dynamic Visuals:**  
+  Features animated SVG backgrounds and scroll-triggered animations that enhance the user experience.
 
 ## Project Structure
 
 - **`index.html`**  
-  The main HTML file containing the structure and content of the portfolio website.
+  The main HTML file containing the complete structure, content, and embedded JavaScript for the portfolio.
 
 - **Images Folder (`Images/`)**  
-  Contains images and SVG files used throughout the site, such as the favicon, logo, and decorative graphics.
+  Houses all images, SVG files, and media assets (e.g., favicon, logos, decorative graphics).
 
 - **Documents Folder (`Docs/`)**  
   Contains downloadable resources like the resume (e.g., `Resume.pdf`).
@@ -31,8 +45,9 @@ You can view the live portfolio at: [portfolio.drewedev.com](https://portfolio.d
 - **HTML5**
 - **Tailwind CSS** (via CDN)
 - **Flowbite** (for enhanced UI components)
-- **JavaScript** (for animations and interactivity)
-- **CSS** (for custom styles and smooth scrolling)
+- **JavaScript** (for interactivity, animations, and EmailJS integration)
+- **CSS** (for custom styling and smooth scrolling)
+- **EmailJS** (to power the contact form functionality)
 
 ## Setup and Usage
 

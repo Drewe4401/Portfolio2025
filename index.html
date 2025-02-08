@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <!-- Ensures proper scaling on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Andrew's Portfolio</title>
   <link rel="icon" type="image/x-icon" href="Images/favicon.ico" />
@@ -13,6 +14,30 @@
   <style>
     html {
       scroll-behavior: smooth;
+      scroll-padding-top: 80px; /* Adjust this value to match your navbar's height */
+    }
+    @media (min-height: 1300px) {
+      .extra-move-right {
+        transform: translateX(150px);
+      }
+    }
+  
+    /* Default blob position for larger screens */
+    .landing-blob {
+      bottom: -2rem; /* Adjust as needed for larger screens */
+    }
+  
+    /* For screens 1023px and below, move the blob up */
+    @media (max-width: 1023px) {
+      .landing-blob {
+        bottom: 4rem; /* Adjust this value to raise the blob */
+      }
+    }
+  
+    .landing-blob {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
     }
   </style>
 </head>
@@ -60,252 +85,417 @@
   <!-- Adding top padding to ensure content isn't hidden behind the fixed navbar -->
   <main class="pt-20">
     
-<!-- Hero Section Start -->
-<section id="landing" class="scroll-mt-16 min-h-[calc(100vh)] flex items-center dark:bg-dark">
-  <div class="container mx-auto px-4">
-    <div class="flex flex-wrap items-center">
-      <!-- Left Column: Text Content -->
-      <div class="w-full lg:w-1/2 px-4" data-aos="fade-right" data-aos-duration="1500">
-        <h1 class="text-base font-semibold text-primary md:text-xl">
-          Greetings, I'm
-          <span class="mt-1 block text-4xl font-bold text-dark dark:text-white lg:text-5xl">
-            Andrew Ellender
-          </span>
-        </h1>
-        <h2
-          class="mt-3 mb-5 text-lg font-medium text-dark dark:text-white lg:text-2xl"
-          data-aos="fade-right"
-          data-aos-duration="1500"
-          data-aos-delay="300"
-        >
-          Creative Web Artisan & Digital Innovator
-        </h2>
-        <p class="mb-10 font-medium italic leading-relaxed text-secondary md:text-md">
-          I transform bold ideas into immersive digital journeys, blending innovation with exceptional design.
-        </p>
-        <a
-        href="Docs/Resume.pdf"
-        class="inline-block rounded-full bg-gradient-to-r from-[#14b8a6] to-[#3b82f6] px-8 py-3 text-base font-semibold text-white shadow transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#14b8a6] focus:ring-offset-2"
-      >
-        Download CV
-      </a>
-      </div>
-      
-
-      <!-- Right Column: Image -->
-      <div class="w-full lg:w-1/2 px-4" data-aos="zoom-in" data-aos-duration="1500">
-        <div class="relative mt-10 lg:mt-0">
-          <!-- Andrew.svg constrained by max height to 80% of viewport -->
-          <img
-            src="Images/Andrewtall.svg"
-            alt="[Your Name]'s face"
-            class="mx-auto relative z-10 max-h-[88vh] w-auto object-contain"
-          />
-
-          <!-- Decorative background SVG (cooler version, larger) -->
-          <span class="absolute -bottom-16 left-1/2 -translate-x-1/2 md:-bottom-10 md:scale-100">
-            <svg
-              width="800"
-              height="800"
-              viewBox="0 0 300 300"
-              xmlns="http://www.w3.org/2000/svg"
+    <!-- Hero Section Start -->
+    <section id="landing" class="scroll-mt-16 min-h-[96vh] flex items-center dark:bg-dark">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap items-center">
+          <!-- Left Column: Text Content -->
+          <div class="w-full lg:w-1/2 px-4 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1500">
+            <h1 class="text-base font-semibold text-primary md:text-xl">
+              Greetings, I'm
+              <span class="mt-1 block text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
+                Andrew Ellender
+              </span>
+            </h1>
+            <h2 class="mt-3 mb-5 text-base sm:text-lg md:text-xl font-medium text-dark dark:text-white"
+              data-aos="fade-right"
+              data-aos-duration="1500"
+              data-aos-delay="300"
             >
-              <defs>
-                <linearGradient id="blobGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#14b8a6" />
-                  <stop offset="100%" stop-color="#3b82f6" />
-                </linearGradient>
-              </defs>
-              <path
-                fill="url(#blobGradient)"
-                d="M150,10
-                   C210,20 260,70 275,130
-                   C290,190 250,250 190,270
-                   C130,290 70,270 40,220
-                   C10,170 20,100 60,60
-                   C100,20 140,0 150,10Z"
+              Software Engineer & Information Technologist
+            </h2>
+            <p class="mb-10 font-medium italic leading-relaxed text-gray-600 dark:text-gray-300">
+              "But as for you, be strong and do not give up, for your work will be rewarded."
+              <span class="block text-right mt-2">- 2 Chronicles 15:7</span>
+            </p>
+            <a
+              href="Docs/Resume.pdf" target="_blank"
+              class="inline-block rounded-full bg-gradient-to-r from-[#14b8a6] to-[#3b82f6] px-8 py-3 text-base font-semibold text-white shadow transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#14b8a6] focus:ring-offset-2"
+            >
+              View Resume
+            </a>
+          </div>
+          
+          <!-- Right Column: Image and Blob -->
+          <div class="w-full lg:w-1/2 px-4 flex justify-center lg:justify-end" data-aos="zoom-in" data-aos-duration="1500">
+            <!-- Optionally add a left margin on larger screens to keep the content clear of left text -->
+            <div class="relative mt-10 lg:mt-0 lg:ml-12 extra-move-right">
+              <!-- Blob Element -->
+              <span class="landing-blob absolute left-1/2 transform -translate-x-1/2">
+                <svg
+                  class="w-[60vmin] h-[60vmin] sm:w-[65vmin] sm:h-[65vmin] md:w-[70vmin] md:h-[70vmin] lg:w-[80vmin] lg:h-[80vmin]"
+                  viewBox="0 0 300 300"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <defs>
+                    <!-- Animated gradient that cycles between teal and blue -->
+                    <linearGradient id="blobGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#14b8a6">
+                        <animate
+                          attributeName="stop-color"
+                          values="#14b8a6; #3b82f6; #14b8a6"
+                          dur="5s"
+                          repeatCount="indefinite"
+                        />
+                      </stop>
+                      <stop offset="100%" stop-color="#3b82f6">
+                        <animate
+                          attributeName="stop-color"
+                          values="#3b82f6; #14b8a6; #3b82f6"
+                          dur="5s"
+                          repeatCount="indefinite"
+                        />
+                      </stop>
+                    </linearGradient>
+                    <!-- Wavy effect filter with randomized turbulence and displacement -->
+                    <filter id="wavyFilter">
+                      <!-- feTurbulence generates the noise pattern -->
+                      <feTurbulence
+                        type="fractalNoise"
+                        baseFrequency="0.02"
+                        numOctaves="3"
+                        result="turbulence"
+                      >
+                        <animate
+                          attributeName="baseFrequency"
+                          values="0.02;0.05;0.02"
+                          dur="5s"
+                          repeatCount="indefinite"
+                        />
+                      </feTurbulence>
+                      <!-- feDisplacementMap uses the turbulence to distort the circle -->
+                      <feDisplacementMap
+                        in="SourceGraphic"
+                        in2="turbulence"
+                        scale="15"
+                        xChannelSelector="R"
+                        yChannelSelector="G"
+                      >
+                        <animate
+                          attributeName="scale"
+                          values="15;30;15"
+                          dur="7s"
+                          repeatCount="indefinite"
+                        />
+                      </feDisplacementMap>
+                    </filter>
+                  </defs>
+                  <!-- Perfect circle with the animated gradient and wavy filter applied -->
+                  <circle cx="150" cy="150" r="140" fill="url(#blobGradient)" filter="url(#wavyFilter)" />
+                </svg>
+              </span>
+              
+              <!-- Ensure the parent container has relative positioning -->
+              <img
+                src="Images/Andrewtall.svg"
+                alt="Andrew Ellender's face"
+                class="relative z-10 mx-auto max-h-[60vh] sm:max-h-[96vh] w-auto object-contain"
               />
-            </svg>
-          </span>
+            </div>
+            
+          </div>
         </div>
+      </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="scroll-mt-20 py-16 bg-white dark:bg-gray-800">
+      <div class="max-w-screen-xl mx-auto px-4">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-relaxed pb-2 bg-gradient-to-r from-teal-500 to-blue-500 bg-clip-text text-transparent">
+            Welcome to My World
+          </h2>
+          <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
+            A glimpse into my journey and passion for technology.
+          </p>
+        </div>
+        <!-- Content -->
+        <div class="max-w-3xl mx-auto space-y-8">
+          <p class="text-lg text-gray-700 dark:text-gray-300">
+            Hey there! I'm <span class="font-semibold text-teal-500">Andrew Ellender</span>, a software engineer and IT specialist born and raised in Louisiana. My journey into technology started at 
+            <a href="https://www.lsu.edu" target="_blank" rel="noopener noreferrer" class="text-teal-500 hover:underline">
+              Louisiana State University
+            </a>, where I earned my degree in 
+            <span class="font-semibold text-teal-500">Computer Science (Software Engineering)</span>, diving deep into coding, database management, and cybersecurity.
+          </p>
+          <p class="text-lg text-gray-700 dark:text-gray-300">
+            Throughout college, I worked on various projects—from open-source software to cloud-based applications—developing a passion for creating scalable and efficient systems. After graduating, I began my professional career in IT, managing networks, servers, and security infrastructure.
+          </p>
+          <p class="text-lg text-gray-700 dark:text-gray-300">
+            Now, I work at <span class="text-teal-500 font-semibold">Louisiana Pigment</span>, where I manage enterprise software, optimize server and network performance, and develop and deploy 
+            <span class="font-semibold text-teal-500">ASP.NET applications</span> to enhance business operations. I thrive on building technology that makes a difference, whether it's streamlining workflows, securing critical data, or improving IT infrastructure.
+          </p>
+          <p class="text-lg text-gray-700 dark:text-gray-300">
+            When I’m not coding or managing systems, you’ll find me working on open-source projects, deploying Docker containers, or exploring emerging tech. Outside of work, I enjoy gaming, watching movies, staying active, and keeping up with the stock market.
+          </p>
+          <p class="text-center text-xl font-bold text-teal-500">
+            Let’s build something awesome together! 
+          </p>
+        </div>
+      </div>
+    </section>
+
+<!-- Resume Section -->
+<section id="resume" class="scroll-mt-20 bg-gray-100 dark:bg-gray-900 py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Resume</h2>
+    <p class="text-lg mb-6">
+      Below is a brief summary of my education and work experience. For more details, please download my full resume.
+    </p>
+    <div class="space-y-8">
+      <!-- Education -->
+      <div>
+        <h3 class="text-2xl font-semibold">
+          Bachelor's Degree in Computer Science (Software Engineering)
+          <span class="font-normal">– Louisiana State University</span>
+        </h3>
+        <p class="italic">08/2019 – 05/2023</p>
+        <p>GPA: 3.55</p>
+      </div>
+
+      <!-- Experience: System Engineer at National Networks -->
+      <div>
+        <h3 class="text-2xl font-semibold">System Engineer at National Networks</h3>
+        <p class="italic">12/2023 – 04/2024</p>
+        <ul class="list-disc ml-6">
+          <li>Managed Windows servers, including user management, permissions, DHCP, and DNS.</li>
+          <li>Implemented backup and recovery solutions for data integrity and operational continuity.</li>
+          <li>Provided comprehensive software and hardware support to clients.</li>
+          <li>Handled networking tasks to ensure optimal connectivity and performance.</li>
+          <li>Administered Microsoft 365 services to maintain smooth operations and accessibility.</li>
+          <li>Strengthened cybersecurity by monitoring and mitigating threats such as phishing, remote access, and malware.</li>
+        </ul>
+      </div>
+
+      <!-- Experience: Information Technology Specialist at Louisiana Pigment -->
+      <div>
+        <h3 class="text-2xl font-semibold">Information Technology Specialist at Louisiana Pigment</h3>
+        <p class="italic">04/2024 – Present</p>
+        <ul class="list-disc ml-6">
+          <li>Oversee the design, implementation, and maintenance of databases to ensure optimal performance and security.</li>
+          <li>Handle the configuration and maintenance of network switches for seamless communication and data transfer.</li>
+          <li>Manage and update software systems to meet company needs and industry standards.</li>
+          <li>Administer and maintain servers to ensure reliable and efficient operation.</li>
+          <li>Develop ASP.NET applications for plant operations, including tracking events, maintenance, and CO₂ levels.</li>
+        </ul>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+
+<!-- Skills Section -->
+<section id="skills" class="scroll-mt-20 py-16 dark:bg-gray-800">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Skills</h2>
+    <p class="text-lg mb-6">
+      Here are some of the key technologies and tools I work with:
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      <!-- Existing Skills -->
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">C# / .NET</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">HTML</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">CSS</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">JavaScript</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">React</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Node.js</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">SQL / MySQL</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Firebase</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Cybersecurity</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Windows Server</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Microsoft 365</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Git</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Python</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Java</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">AWS</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Azure</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Linux</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Docker</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">React Native</h3>
+      </div>
+      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
+        <h3 class="font-semibold">Google Cloud</h3>
       </div>
     </div>
   </div>
 </section>
-<!-- Hero Section End -->
 
 
 
-
-
-
-    <!-- Introduction Section -->
-    <section id="introduction" class="scroll-mt-20 py-16">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-4xl font-bold mb-4">Introduction</h2>
-        <p class="text-lg mb-6">
-          Hello! I am a developer with a passion for creating beautiful and functional web applications. With years of experience in both front-end and back-end development, I strive to build solutions that make a difference.
+<!-- Projects Section -->
+<section id="projects" class="scroll-mt-20 bg-gray-100 dark:bg-gray-900 py-16">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Projects</h2>
+    <p class="text-lg mb-6">A showcase of some projects I've worked on:</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <!-- Nexus Music Project -->
+      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
+        <h3 class="text-2xl font-semibold mb-2">Nexus Music (Work in Progress)</h3>
+        <p class="mb-4">
+          A self-hosted music streaming platform that empowers users to manage and stream their music collections. Featuring a Go-powered backend, a React-based admin dashboard, and a React Native mobile app, all containerized with Docker for seamless deployment. <span class="font-semibold">In Development</span>.
         </p>
+        <a href="https://github.com/Drewe4401/Nexus-Music" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+          View Project
+        </a>
       </div>
-    </section>
 
-    <!-- Resume Section -->
-    <section id="resume" class="scroll-mt-20 bg-gray-100 dark:bg-gray-800 py-16">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-4xl font-bold mb-4">Resume</h2>
-        <p class="text-lg mb-6">
-          Below is a brief summary of my education and work experience. For more details, please download my full resume.
+      <!-- DES Encryption and Decryption Project -->
+      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
+        <h3 class="text-2xl font-semibold mb-2">DES Encryption and Decryption</h3>
+        <p class="mb-4">
+          A Java program that implements the Data Encryption Standard (DES) algorithm for secure encryption and decryption. Features include XOR operations on binary strings, key generation, and 16 rounds of encryption/decryption.
         </p>
-        <!-- Example Resume Timeline -->
-        <div class="space-y-8">
-          <div>
-            <h3 class="text-2xl font-semibold">Software Engineer at XYZ Company</h3>
-            <p class="italic">2021 - Present</p>
-            <p>
-              Developed web applications using modern frameworks and technologies. Collaborated with cross-functional teams to design and implement new features.
-            </p>
-          </div>
-          <div>
-            <h3 class="text-2xl font-semibold">Bachelor of Science in Computer Science</h3>
-            <p class="italic">2017 - 2021</p>
-            <p>
-              Studied computer science fundamentals, software development practices, and design principles.
-            </p>
-          </div>
-        </div>
+        <a href="https://github.com/Drewe4401/DES-Encryption-and-Decrytion" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+          View Project
+        </a>
       </div>
-    </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="scroll-mt-20 py-16">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-4xl font-bold mb-4">Skills</h2>
-        <p class="text-lg mb-6">Here are some of the technologies and tools I work with:</p>
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">HTML</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">CSS</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">JavaScript</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">Tailwind CSS</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">React</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">Node.js</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">Python</h3>
-          </div>
-          <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-            <h3 class="font-semibold">Git</h3>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="scroll-mt-20 bg-gray-100 dark:bg-gray-800 py-16">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-4xl font-bold mb-4">Projects</h2>
-        <p class="text-lg mb-6">A showcase of some projects I've worked on:</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Project Card -->
-          <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-            <h3 class="text-2xl font-semibold mb-2">Project One</h3>
-            <p class="mb-4">
-              A brief description of the project, its features, and the technologies used.
-            </p>
-            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">View Project</a>
-          </div>
-          <!-- Project Card -->
-          <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-            <h3 class="text-2xl font-semibold mb-2">Project Two</h3>
-            <p class="mb-4">
-              A brief description of the project, its features, and the technologies used.
-            </p>
-            <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline">View Project</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="scroll-mt-20 py-16">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <h2 class="text-4xl font-bold mb-4">Contact</h2>
-        <p class="text-lg mb-6">
-          Have questions or want to work together? Fill out the form below or send me an email.
+      <!-- Exchango Currency Converter Project -->
+      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
+        <h3 class="text-2xl font-semibold mb-2">Exchango Currency Converter</h3>
+        <p class="mb-4">
+          A dynamic, real-time currency converter featuring smooth animations and a responsive design. Built with HTML5, Tailwind CSS, and Vanilla JavaScript, it retrieves up-to-date exchange rates from an API and offers an interactive user interface.
         </p>
-        <!-- Contact Form -->
-        <form class="space-y-6">
-          <div>
-            <label for="name" class="block text-sm font-medium">Name</label>
-            <input type="text" id="name" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your Name" required>
-          </div>
-          <div>
-            <label for="email" class="block text-sm font-medium">Email</label>
-            <input type="email" id="email" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="you@example.com" required>
-          </div>
-          <div>
-            <label for="message" class="block text-sm font-medium">Message</label>
-            <textarea id="message" rows="4" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your message here" required></textarea>
-          </div>
-          <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
-            Send Message
-          </button>
-        </form>
+        <a href="https://github.com/Drewe4401/Exchango" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+          View Project
+        </a>
+        <br>
+        <a href="https://exchango.drewedev.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+          Live Demo
+        </a>
       </div>
-    </section>
-    
-  </main>
 
-  <!-- Footer -->
-  <footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
-    <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-      <!-- Branding and Copyright -->
-      <div class="mb-4 md:mb-0">
-        <a href="#landing" class="text-xl font-bold hover:text-blue-400 transition">My Portfolio</a>
-        <p class="mt-2 text-gray-400">&copy; 2025 My Portfolio. All rights reserved.</p>
-      </div>
-      <!-- Social Media Icons -->
-      <div class="flex space-x-4">
-        <!-- Twitter Icon -->
-        <a href="https://twitter.com" class="text-gray-400 hover:text-white transition" aria-label="Twitter">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22.46 6c-.77.35-1.6.59-2.46.69a4.28 4.28 0 001.88-2.37 8.59 8.59 0 01-2.71 1.04 4.26 4.26 0 00-7.27 3.88 12.09 12.09 0 01-8.77-4.44 4.26 4.26 0 001.32 5.69 4.24 4.24 0 01-1.93-.54v.05a4.27 4.27 0 003.42 4.18 4.28 4.28 0 01-1.92.07 4.27 4.27 0 003.99 2.96A8.57 8.57 0 012 19.54a12.08 12.08 0 006.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.39-.01-.58A8.73 8.73 0 0024 4.56a8.5 8.5 0 01-2.54.7z"/>
-          </svg>
-        </a>
-        <!-- Facebook Icon -->
-        <a href="https://facebook.com" class="text-gray-400 hover:text-white transition" aria-label="Facebook">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M22 12.07C22 6.5 17.52 2 12 2S2 6.5 2 12.07c0 5 3.66 9.16 8.44 9.93v-7.03h-2.54V12h2.54V9.8c0-2.51 1.5-3.89 3.8-3.89 1.1 0 2.24.2 2.24.2v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.97h-2.34v7.03C18.34 21.23 22 17.07 22 12.07z"/>
-          </svg>
-        </a>
-        <!-- LinkedIn Icon -->
-        <a href="https://linkedin.com" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zM8.337 19h-3.337v-10h3.337v10zm-1.668-11.275c-1.069 0-1.932-.864-1.932-1.933 0-1.069.863-1.933 1.932-1.933 1.068 0 1.932.864 1.932 1.933 0 1.069-.864 1.933-1.932 1.933zm12.331 11.275h-3.337v-5.396c0-1.286-.026-2.942-1.793-2.942-1.793 0-2.066 1.4-2.066 2.847v5.491h-3.337v-10h3.203v1.367h.045c.447-.846 1.537-1.736 3.164-1.736 3.386 0 4.012 2.228 4.012 5.125v4.244z"/>
-          </svg>
-        </a>
-        <!-- GitHub Icon -->
-        <a href="https://github.com" class="text-gray-400 hover:text-white transition" aria-label="GitHub">
-          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.292 9.42 7.86 10.95.575.106.78-.25.78-.55v-2.1c-3.2.695-3.88-1.55-3.88-1.55-.524-1.33-1.28-1.68-1.28-1.68-1.046-.715.08-.7.08-.7 1.15.08 1.754 1.18 1.754 1.18 1.028 1.76 2.7 1.25 3.36.955.105-.745.402-1.25.732-1.53-2.56-.3-5.255-1.28-5.255-5.69 0-1.255.448-2.28 1.182-3.086-.12-.3-.512-1.52.114-3.165 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.89-.39c.98.005 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.626 1.645.234 2.865.114 3.165.735.806 1.182 1.83 1.182 3.086 0 4.42-2.7 5.386-5.265 5.676.41.35.78 1.05.78 2.12v3.15c0 .3.203.66.788.55C20.71 21.42 24 17.1 24 12c0-6.27-5.23-11.5-12-11.5z"/>
-          </svg>
+      <!-- Stock Market Predictor Project -->
+      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
+        <h3 class="text-2xl font-semibold mb-2">Stock Market Predictor</h3>
+        <p class="mb-4">
+          A machine learning project developed with Python and TensorFlow that predicts stock prices using a Kaggle dataset. The model computes the mean squared error (MSE) to evaluate prediction accuracy, providing insights into market trends.
+        </p>
+        <a href="https://colab.research.google.com/drive/1yPQlghKHkiDv97RLkuiETZPd8JUG-wCg?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
+          View Project
         </a>
       </div>
     </div>
-  </footer>
+  </div>
+</section>
+
+
+
+<!-- Notification Div -->
+<div id="notification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg hidden z-50">
+  <span id="notification-text"></span>
+  <button id="notification-close" class="ml-4 text-white focus:outline-none">&times;</button>
+</div>
+
+<!-- Contact Section -->
+<section id="contact" class="scroll-mt-20 py-16 dark:bg-gray-800">
+  <div class="max-w-screen-xl mx-auto px-4">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Contact</h2>
+    <p class="text-lg mb-6">
+      Have questions or want to work together? Fill out the form below or send me an email.
+    </p>
+    <!-- Contact Form -->
+    <form id="contact-form" class="space-y-6">
+      <div>
+        <label for="from_name" class="block text-sm font-medium">Name</label>
+        <input type="text" id="from_name" name="from_name" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your Name" required>
+      </div>
+      <div>
+        <label for="from_email" class="block text-sm font-medium">Email</label>
+        <input type="email" id="from_email" name="from_email" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="you@example.com" required>
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-medium">Message</label>
+        <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your message here" required></textarea>
+      </div>
+      <!-- Hidden field to set the recipient's name in the email template -->
+      <input type="hidden" name="to_name" value="Andrew">
+      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
+        Send Message
+      </button>
+    </form>
+  </div>
+</section>
+
+    
+  </main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
+  <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+    <div class="mb-4 md:mb-0">
+      <a href="#landing" class="text-xl font-bold hover:text-blue-400 transition">Andrew's Portfolio</a>
+      <p class="mt-2 text-gray-400">&copy; 2025 All rights reserved.</p>
+    </div>
+    <div class="flex space-x-4">
+      <!-- YouTube Icon -->
+      <a href="https://www.youtube.com/@andrewellender6528" class="text-gray-400 hover:text-white transition" aria-label="YouTube">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M23.498 6.186a2.966 2.966 0 00-2.088-2.1C19.437 3.5 12 3.5 12 3.5s-7.437 0-9.41.586A2.966 2.966 0 00.502 6.186 31.67 31.67 0 000 12a31.67 31.67 0 00.502 5.814 2.966 2.966 0 002.088 2.1c1.973.586 9.41.586 9.41.586s7.437 0 9.41-.586a2.966 2.966 0 002.088-2.1A31.67 31.67 0 0024 12a31.67 31.67 0 00-.502-5.814zM9.75 15.02V8.98l6.5 3.02-6.5 3.02z"/>
+        </svg>
+      </a>
+      <!-- LinkedIn Icon -->
+      <a href="https://www.linkedin.com/in/andrew-e-b87048222" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zM8.337 19h-3.337v-10h3.337v10zm-1.668-11.275c-1.069 0-1.932-.864-1.932-1.933 0-1.069.863-1.933 1.932-1.933 1.068 0 1.932.864 1.932 1.933 0 1.069-.864 1.933-1.932 1.933zm12.331 11.275h-3.337v-5.396c0-1.286-.026-2.942-1.793-2.942-1.793 0-2.066 1.4-2.066 2.847v5.491h-3.337v-10h3.203v1.367h.045c.447-.846 1.537-1.736 3.164-1.736 3.386 0 4.012 2.228 4.012 5.125v4.244z"/>
+        </svg>
+      </a>
+      <!-- GitHub Icon -->
+      <a href="https://github.com/Drewe4401" class="text-gray-400 hover:text-white transition" aria-label="GitHub">
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.292 9.42 7.86 10.95.575.106.78-.25.78-.55v-2.1c-3.2.695-3.88-1.55-3.88-1.55-.524-1.33-1.28-1.68-1.28-1.68-1.046-.715.08-.7.08-.7 1.15.08 1.754 1.18 1.754 1.18 1.028 1.76 2.7 1.25 3.36.955.105-.745.402-1.25.732-1.53-2.56-.3-5.255-1.28-5.255-5.69 0-1.255.448-2.28 1.182-3.086-.12-.3-.512-1.52.114-3.165 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.89-.39c.98.005 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.626 1.645.234 2.865.114 3.165.735.806 1.182 1.83 1.182 3.086 0 4.42-2.7 5.386-5.265 5.676.41.35.78 1.05.78 2.12v3.15c0 .3.203.66.788.55C20.71 21.42 24 17.1 24 12c0-6.27-5.23-11.5-12-11.5z"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</footer>
+
 
   <!-- Flowbite JS (for navbar toggle) -->
   <script src="https://unpkg.com/flowbite@1.6.6/dist/flowbite.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
   
   <!-- Custom JS for scroll-triggered animations -->
   <script>
@@ -327,6 +517,54 @@
         observer.observe(section);
       });
     });
+
+    (function(){
+    emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID); // Replace with your EmailJS user ID
+  })();
+
+   // Listen for form submission
+   document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_ID, this)
+      .then(function() {
+        showNotification('Message sent successfully!', 'success');
+        document.getElementById('contact-form').reset();
+      }, function(error) {
+        console.error('Failed to send message:', error);
+        showNotification('Oops! Something went wrong. Please try again later.', 'error');
+      });
+  });
+
+  // Function to show the notification
+  function showNotification(message, type) {
+    const notification = document.getElementById('notification');
+    const notificationText = document.getElementById('notification-text');
+    notificationText.textContent = message;
+
+    // Change background color based on type (success: green, error: red)
+    if (type === 'success') {
+      notification.classList.remove('bg-red-500');
+      notification.classList.add('bg-green-500');
+    } else {
+      notification.classList.remove('bg-green-500');
+      notification.classList.add('bg-red-500');
+    }
+
+    // Show the notification
+    notification.classList.remove('hidden');
+
+    // Allow manual closing of the notification
+    document.getElementById('notification-close').onclick = function() {
+      notification.classList.add('hidden');
+    };
+
+    // Automatically hide the notification after 3 seconds
+    setTimeout(function() {
+      notification.classList.add('hidden');
+    }, 3000);
+  }
+
   </script>
 </body>
 </html>
