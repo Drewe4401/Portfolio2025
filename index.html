@@ -519,14 +519,14 @@
     });
 
     (function(){
-    emailjs.init(import.meta.env.VITE_EMAILJS_USER_ID); // Replace with your EmailJS user ID
+    emailjs.init("-bIjfq6m-S-TH4YZB"); // Replace with your EmailJS user ID
   })();
 
    // Listen for form submission
    document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault(); // Prevent default form submission
 
-    emailjs.sendForm(import.meta.env.VITE_EMAILJS_SERVICE_ID, import.meta.env.VITE_EMAILJS_TEMPLATE_ID, this)
+    emailjs.sendForm('service_w7xlwz8', 'template_tojp03j', this)
       .then(function() {
         showNotification('Message sent successfully!', 'success');
         document.getElementById('contact-form').reset();
