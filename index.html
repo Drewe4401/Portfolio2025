@@ -1,570 +1,534 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <!-- Ensures proper scaling on mobile devices -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Andrew's Portfolio</title>
-  <link rel="icon" type="image/x-icon" href="Images/favicon.ico" />
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Flowbite CSS (optional) -->
-  <link rel="stylesheet" href="https://unpkg.com/flowbite@1.6.6/dist/flowbite.min.css" />
-  <!-- Custom CSS for smooth scrolling -->
-  <style>
-    html {
-      scroll-behavior: smooth;
-      scroll-padding-top: 80px; /* Adjust this value to match your navbar's height */
-    }
-    @media (min-height: 1300px) {
-      .extra-move-right {
-        transform: translateX(150px);
-      }
-    }
-  
-    /* Default blob position for larger screens */
-    .landing-blob {
-      bottom: -2rem; /* Adjust as needed for larger screens */
-    }
-  
-    /* For screens 1023px and below, move the blob up */
-    @media (max-width: 1023px) {
-      .landing-blob {
-        bottom: 4rem; /* Adjust this value to raise the blob */
-      }
-    }
-  
-    .landing-blob {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrew Ellender | Software Engineer & Information Technologist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" type="image/x-icon" href="Assets/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Base black background */
+            color: #e2e8f0;
+            cursor: none; /* Hide default cursor */
+        }
+        .gradient-text {
+            background: linear-gradient(to right, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .skill-card {
+            background-color: rgba(29, 78, 216, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .skill-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            background-color: rgba(29, 78, 216, 0.25);
+            border-color: rgba(56, 189, 248, 0.5);
+            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.1);
+        }
+        .project-card {
+            background-color: rgba(30, 41, 59, 0.5);
+            border: 1px solid #334155;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            overflow: hidden;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            border-color: #38bdf8;
+        }
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover, a:hover, button:hover {
+            cursor: none; /* Ensure custom cursor is used */
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .active .nav-link {
+            color: #38bdf8;
+        }
+        .active .nav-link::after {
+            width: 100%;
+        }
+        #scroll-to-top {
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        /* Custom Cursor */
+        .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #38bdf8;
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease-out;
+        }
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #38bdf8;
+            border-radius: 50%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.2s ease-out, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+        }
+        /* Resume Card Hover Effect */
+        .resume-card {
+            background-color: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid #334155;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .timeline-item:hover .resume-card {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+        /* Three.js Canvas */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+<body class="antialiased">
 
-  <!-- Navbar -->
-  <nav class="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-700 fixed w-full top-0 left-0 z-50">
-    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="#landing" class="flex items-center space-x-3">
-        <img src="Images/nav_logo.svg" class="h-12 sm:h-12 md:h-[65px] w-auto" alt="Logo" />
-        <span class="self-center text-2xl font-semibold whitespace-nowrap">Andrew Ellender</span>
-      </a>
-      <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
-        <span class="sr-only">Open main menu</span>
-        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
-        </svg>
-      </button>
-      <div class="hidden w-full lg:block lg:w-auto" id="navbar-default">
-        <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-          <li>
-            <a href="#landing" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Home</a>
-          </li>
-          <li>
-            <a href="#introduction" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Introduction</a>
-          </li>
-          <li>
-            <a href="#resume" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Resume</a>
-          </li>
-          <li>
-            <a href="#skills" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Skills</a>
-          </li>
-          <li>
-            <a href="#projects" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Projects</a>
-          </li>
-          <li>
-            <a href="#contact" class="block py-2 px-3 hover:text-blue-700 dark:hover:text-blue-400">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+    <canvas id="bg-canvas"></canvas>
 
-  <!-- Main Content -->
-  <!-- Adding top padding to ensure content isn't hidden behind the fixed navbar -->
-  <main class="pt-20">
-    
-    <!-- Hero Section Start -->
-    <section id="landing" class="scroll-mt-16 min-h-[96vh] flex items-center dark:bg-dark">
-      <div class="container mx-auto px-4">
-        <div class="flex flex-wrap items-center">
-          <!-- Left Column: Text Content -->
-          <div class="w-full lg:w-1/2 px-4 text-center lg:text-left" data-aos="fade-right" data-aos-duration="1500">
-            <h1 class="text-base font-semibold text-primary md:text-xl">
-              Greetings, I'm
-              <span class="mt-1 block text-3xl sm:text-4xl md:text-5xl font-bold text-dark dark:text-white">
-                Andrew Ellender
-              </span>
-            </h1>
-            <h2 class="mt-3 mb-5 text-base sm:text-lg md:text-xl font-medium text-dark dark:text-white"
-              data-aos="fade-right"
-              data-aos-duration="1500"
-              data-aos-delay="300"
-            >
-              Software Engineer & Information Technologist
-            </h2>
-            <p class="mb-10 font-medium italic leading-relaxed text-gray-600 dark:text-gray-300">
-              "But as for you, be strong and do not give up, for your work will be rewarded."
-              <span class="block text-right mt-2">- 2 Chronicles 15:7</span>
-            </p>
-            <a
-              href="Docs/Resume2025.pdf" target="_blank"
-              class="inline-block rounded-full bg-gradient-to-r from-[#14b8a6] to-[#3b82f6] px-8 py-3 text-base font-semibold text-white shadow transition duration-300 ease-in-out hover:opacity-80 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#14b8a6] focus:ring-offset-2"
-            >
-              View Resume
-            </a>
-          </div>
-          
-          <!-- Right Column: Image and Blob -->
-          <div class="w-full lg:w-1/2 px-4 flex justify-center lg:justify-end" data-aos="zoom-in" data-aos-duration="1500">
-            <!-- Optionally add a left margin on larger screens to keep the content clear of left text -->
-            <div class="relative mt-10 lg:mt-0 lg:ml-12 extra-move-right">
-              <!-- Blob Element -->
-              <span class="landing-blob absolute left-1/2 transform -translate-x-1/2">
-                <svg
-                  class="w-[60vmin] h-[60vmin] sm:w-[65vmin] sm:h-[65vmin] md:w-[70vmin] md:h-[70vmin] lg:w-[80vmin] lg:h-[80vmin]"
-                  viewBox="0 0 300 300"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <defs>
-                    <!-- Animated gradient that cycles between teal and blue -->
-                    <linearGradient id="blobGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stop-color="#14b8a6">
-                        <animate
-                          attributeName="stop-color"
-                          values="#14b8a6; #3b82f6; #14b8a6"
-                          dur="5s"
-                          repeatCount="indefinite"
-                        />
-                      </stop>
-                      <stop offset="100%" stop-color="#3b82f6">
-                        <animate
-                          attributeName="stop-color"
-                          values="#3b82f6; #14b8a6; #3b82f6"
-                          dur="5s"
-                          repeatCount="indefinite"
-                        />
-                      </stop>
-                    </linearGradient>
-                    <!-- Wavy effect filter with randomized turbulence and displacement -->
-                    <filter id="wavyFilter">
-                      <!-- feTurbulence generates the noise pattern -->
-                      <feTurbulence
-                        type="fractalNoise"
-                        baseFrequency="0.02"
-                        numOctaves="3"
-                        result="turbulence"
-                      >
-                        <animate
-                          attributeName="baseFrequency"
-                          values="0.02;0.05;0.02"
-                          dur="5s"
-                          repeatCount="indefinite"
-                        />
-                      </feTurbulence>
-                      <!-- feDisplacementMap uses the turbulence to distort the circle -->
-                      <feDisplacementMap
-                        in="SourceGraphic"
-                        in2="turbulence"
-                        scale="15"
-                        xChannelSelector="R"
-                        yChannelSelector="G"
-                      >
-                        <animate
-                          attributeName="scale"
-                          values="15;30;15"
-                          dur="7s"
-                          repeatCount="indefinite"
-                        />
-                      </feDisplacementMap>
-                    </filter>
-                  </defs>
-                  <!-- Perfect circle with the animated gradient and wavy filter applied -->
-                  <circle cx="150" cy="150" r="140" fill="url(#blobGradient)" filter="url(#wavyFilter)" />
-                </svg>
-              </span>
-              
-              <!-- Ensure the parent container has relative positioning -->
-              <img
-                src="Images/Andrewtall.svg"
-                alt="Andrew Ellender's face"
-                class="relative z-10 mx-auto max-h-[60vh] sm:max-h-[96vh] w-auto object-contain"
-              />
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
+    <header id="header" class="bg-black/30 backdrop-blur-md border-b border-slate-800/50 fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#home" class="text-xl font-bold tracking-tight gradient-text">Andrew Ellender</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-slate-300 hover:text-sky-400">Home</a>
+                <a href="#intro" class="nav-link text-slate-300 hover:text-sky-400">Introduction</a>
+                <a href="#resume" class="nav-link text-slate-300 hover:text-sky-400">Resume</a>
+                <a href="#skills" class="nav-link text-slate-300 hover:text-sky-400">Skills</a>
+                <a href="#projects" class="nav-link text-slate-300 hover:text-sky-400">Projects</a>
+                <a href="#contact" class="nav-link text-slate-300 hover:text-sky-400">Contact</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-slate-300 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-black/30 backdrop-blur-md">
+            <a href="#home" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Home</a>
+            <a href="#intro" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Introduction</a>
+            <a href="#resume" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Resume</a>
+            <a href="#skills" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Skills</a>
+            <a href="#projects" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Projects</a>
+            <a href="#contact" class="block text-center py-2 px-4 text-sm text-slate-300 hover:bg-slate-800">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="min-h-screen flex items-center justify-center text-center px-6 pt-24">
+            <div class="max-w-4xl mx-auto">
+                <div id="home-avatar" class="w-48 h-48 mx-auto mb-8 rounded-full bg-slate-800/80 border-4 border-sky-400 flex items-center justify-center shadow-2xl shadow-sky-500/20">
+                    <img src="Assets/Andrew.svg" alt="Andrew Ellender" class="w-44 h-44 rounded-full object-cover" onerror="this.onerror=null;this.style.display='none'; document.getElementById('avatar-fallback').style.display='block';">
+                    <svg id="avatar-fallback" class="w-24 h-24 text-sky-400" style="display:none;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
+                <h1 id="home-title" class="text-4xl md:text-6xl font-black tracking-tighter mb-2">Greetings, I'm <span class="gradient-text">Andrew Ellender</span></h1>
+                <h2 id="home-subtitle" class="text-xl md:text-2xl font-semibold text-slate-400 mb-6">Software Engineer & Information Technologist</h2>
+                <p id="home-quote" class="text-slate-500 italic max-w-xl mx-auto mb-8">"But as for you, be strong and do not give up, for your work will be rewarded." - 2 Chronicles 15:7</p>
+                <a id="home-button" href="Docs/Resume2025.pdf" class="bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-full transition-transform transform hover:scale-105 inline-block">
+                    View Resume
+                </a>
             </div>
-            
-          </div>
+        </section>
+
+        <section id="intro" class="h-[25vh] bg-slate-900/40 backdrop-blur-lg flex items-center justify-center">
+             <div class="text-center px-6">
+                 <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-2">A Quick Introduction</h2>
+                 <p class="text-base md:text-lg text-slate-400 max-w-3xl mx-auto">
+                     I'm a Louisiana-based Software Engineer specializing in ASP.NET applications and enterprise IT. Driven by a passion for building impactful technology, I enjoy tackling challenges from professional systems to personal open-source projects.
+                 </p>
+             </div>
+        </section>
+
+        <section id="resume" class="py-20 md:py-32">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-4">Resume</h2>
+                <p class="section-subtitle text-lg text-slate-400 text-center mb-12">A brief summary of my education and work experience.</p>
+                
+                <div class="relative border-l-2 border-sky-500/30 pl-10 space-y-10">
+              <div class="timeline-item relative">
+                  <div class="absolute -left-[49px] top-1 h-6 w-6 bg-slate-900 rounded-full border-2 border-sky-500 flex items-center justify-center">
+                      <div class="h-2 w-2 bg-sky-500 rounded-full"></div>
+                  </div>
+                  <div class="resume-card p-6 rounded-lg">
+                      <h3 class="text-xl font-bold text-sky-400">Information Technology Specialist</h3>
+                      <p class="text-slate-400 font-medium mb-1">Louisiana Pigment</p>
+                      <p class="text-sm text-slate-500">04/2024 – Present</p>
+                      <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+                          <li>Engineer and deploy full-stack ASP.NET applications to streamline critical plant operations, leading the migration of legacy systems to modern, secure frameworks.</li>
+                          <li>Fortify network security by administering firewalls, configuring switches, and managing secure network infrastructure across fiber and ethernet environments.</li>
+                          <li>Architect and administer SQL databases, ensuring data integrity, optimizing query performance, and developing robust maintenance and backup strategies.</li>
+                          <li>Enhance organizational security posture by proactively monitoring network traffic and email systems for threats and ensuring secure configuration of all end-user systems.</li>
+                      </ul>
+                  </div>
+              </div>
+
+                    <div class="timeline-item relative">
+                        <div class="absolute -left-[49px] top-1 h-6 w-6 bg-slate-900 rounded-full border-2 border-sky-500 flex items-center justify-center">
+                            <div class="h-2 w-2 bg-sky-500 rounded-full"></div>
+                        </div>
+                        <div class="resume-card p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-sky-400">System Engineer</h3>
+                            <p class="text-slate-400 font-medium mb-1">National Networks</p>
+                            <p class="text-sm text-slate-500">12/2023 – 04/2024</p>
+                            <ul class="mt-4 list-disc list-inside text-slate-300 space-y-2">
+                                <li>Managed Windows servers (user management, permissions, DHCP, DNS).</li>
+                                <li>Implemented backup and recovery solutions for data integrity.</li>
+                                <li>Administered Microsoft 365 services for smooth operations.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item relative">
+                        <div class="absolute -left-[49px] top-1 h-6 w-6 bg-slate-900 rounded-full border-2 border-sky-500 flex items-center justify-center">
+                            <div class="h-2 w-2 bg-sky-500 rounded-full"></div>
+                        </div>
+                        <div class="resume-card p-6 rounded-lg">
+                            <h3 class="text-xl font-bold text-sky-400">Bachelor's Degree in Computer Science (Software Engineering)</h3>
+                            <p class="text-slate-400 font-medium mb-1">Louisiana State University</p>
+                            <p class="text-sm text-slate-500">08/2019 – 05/2023 | GPA: 3.55</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="py-20 md:py-32 bg-slate-900/40 backdrop-blur-lg">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-4">Core Competencies</h2>
+                <p class="section-subtitle text-lg text-slate-400 text-center mb-12">A look at the key technologies I work with.</p>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">C# / ASP.NET</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">JavaScript</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">React & Node.js</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Python</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">SQL & Databases</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Cloud (AWS/Azure)</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Docker</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Windows Server</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Git & Version Control</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Network Security</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Encryption</h3></div>
+                    <div class="skill-card p-4 rounded-lg flex flex-col items-center justify-center text-center"><h3 class="font-semibold text-white">Exploitation</h3></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <h2 class="section-title text-3xl md:text-4xl font-bold text-center mb-4">Projects</h2>
+                <p class="section-subtitle text-lg text-slate-400 text-center mb-12">A showcase of some projects I've worked on.</p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                    <div class="project-card rounded-lg flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Bravo Auction Calculator <span class="text-sm font-normal text-yellow-400">(In Progress)</span></h3>
+                            <p class="text-slate-400 mb-4 text-sm">A mobile app for iOS/Android to help fantasy football players dominate auction-style drafts with strategic tools and data.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React Native</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">TypeScript</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Expo</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-800/50 border-t border-slate-700">
+                            <a href="https://apps.apple.com/us/app/bravo-auction-calculator/id6747628724?platform=iphone" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Nexus Music <span class="text-sm font-normal text-yellow-400">(In Progress)</span></h3>
+                            <p class="text-slate-400 mb-4 text-sm">A self-hosted music streaming platform using Go, React, and React Native, all containerized with Docker.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Go</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">React Native</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Docker</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-800/50 border-t border-slate-700">
+                            <a href="https://github.com/Drewe4401/Nexus-Music" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">DES Encryption and Decryption</h3>
+                            <p class="text-slate-400 mb-4 text-sm">A Java program implementing the Data Encryption Standard (DES) algorithm for secure encryption and decryption.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Java</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Cryptography</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-800/50 border-t border-slate-700">
+                            <a href="https://github.com/Drewe4401/DES-Encryption-and-Decrytion" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Exchango Currency Converter</h3>
+                            <p class="text-slate-400 mb-4 text-sm">A dynamic, real-time currency converter with a responsive design, built with HTML, Tailwind CSS, and JavaScript.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">JavaScript</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Tailwind CSS</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">API</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-800/50 border-t border-slate-700 flex space-x-4">
+                            <a href="https://github.com/Drewe4401/Exchango" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">Live Demo &rarr;</a>
+                            <a href="https://exchango.drewedev.com/" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Project &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="project-card rounded-lg flex flex-col">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Stock Market Predictor</h3>
+                            <p class="text-slate-400 mb-4 text-sm">A machine learning project using Python and TensorFlow to predict stock prices from a Kaggle dataset.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Python</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">TensorFlow</span>
+                                <span class="bg-sky-500/20 text-sky-300 text-xs font-semibold px-2.5 py-0.5 rounded-full">Machine Learning</span>
+                            </div>
+                        </div>
+                        <div class="p-6 bg-slate-800/50 border-t border-slate-700">
+                            <a href="https://colab.research.google.com/drive/1yPQlghKHkiDv97RLkuiETZPd8JUG-wCg?usp=sharing" target="_blank" class="font-semibold text-sky-400 hover:text-sky-300 transition-colors">View Project &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-20 md:py-32 bg-slate-900/40 backdrop-blur-lg">
+            <div class="container mx-auto px-6 text-center max-w-2xl">
+                <h2 class="section-title text-3xl md:text-4xl font-bold mb-4">Let's Connect</h2>
+                <p class="section-subtitle text-lg text-slate-400 mb-8">I'm always open to discussing new projects, creative ideas, or opportunities. Feel free to reach out.</p>
+                <a href="mailto:andrewellend@gmail.com" class="contact-button bg-sky-500 hover:bg-sky-600 text-white font-bold py-4 px-10 rounded-full transition-transform transform hover:scale-105 inline-block">
+                    Get In Touch
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-black/30 backdrop-blur-md border-t border-slate-800/50">
+        <div class="container mx-auto px-6 py-8 text-center text-slate-400">
+            <p>&copy; 2025 Andrew Ellender. All Rights Reserved.</p>
+            <p class="text-sm text-slate-500 mt-2">Designed & Built with ❤️</p>
         </div>
-      </div>
-    </section>
-    <!-- Hero Section End -->
+    </footer>
 
-    <!-- Introduction Section -->
-    <section id="introduction" class="scroll-mt-20 py-16 bg-white dark:bg-gray-800">
-      <div class="max-w-screen-xl mx-auto px-4">
-        <!-- Section Header -->
-        <div class="text-center mb-12">
-          <h2 class="text-3xl sm:text-4xl md:text-5xl font-extrabold leading-relaxed pb-2 bg-gradient-to-r from-teal-500 to-blue-500 bg-clip-text text-transparent">
-            Welcome to My World
-          </h2>
-          <p class="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            A glimpse into my journey and passion for technology.
-          </p>
-        </div>
-        <!-- Content -->
-        <div class="max-w-3xl mx-auto space-y-8">
-          <p class="text-lg text-gray-700 dark:text-gray-300">
-            Hey there! I'm <span class="font-semibold text-teal-500">Andrew Ellender</span>, a software engineer and IT specialist born and raised in Louisiana. My journey into technology started at 
-            <a href="https://www.lsu.edu" target="_blank" rel="noopener noreferrer" class="text-teal-500 hover:underline">
-              Louisiana State University
-            </a>, where I earned my degree in 
-            <span class="font-semibold text-teal-500">Computer Science (Software Engineering)</span>, diving deep into coding, database management, and cybersecurity.
-          </p>
-          <p class="text-lg text-gray-700 dark:text-gray-300">
-            Throughout college, I worked on various projects—from open-source software to cloud-based applications—developing a passion for creating scalable and efficient systems. After graduating, I began my professional career in IT, managing networks, servers, and security infrastructure.
-          </p>
-          <p class="text-lg text-gray-700 dark:text-gray-300">
-            Now, I work at <span class="text-teal-500 font-semibold">Louisiana Pigment</span>, where I manage enterprise software, optimize server and network performance, and develop and deploy 
-            <span class="font-semibold text-teal-500">ASP.NET applications</span> to enhance business operations. I thrive on building technology that makes a difference, whether it's streamlining workflows, securing critical data, or improving IT infrastructure.
-          </p>
-          <p class="text-lg text-gray-700 dark:text-gray-300">
-            When I’m not coding or managing systems, you’ll find me working on open-source projects, deploying Docker containers, or exploring emerging tech. Outside of work, I enjoy gaming, watching movies, staying active, and keeping up with the stock market.
-          </p>
-          <p class="text-center text-xl font-bold text-teal-500">
-            Let’s build something awesome together! 
-          </p>
-        </div>
-      </div>
-    </section>
+    <button id="scroll-to-top" class="fixed bottom-6 right-6 bg-sky-500/80 hover:bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg opacity-0 transform translate-y-4 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+    </button>
 
-<!-- Resume Section -->
-<section id="resume" class="scroll-mt-20 bg-gray-100 dark:bg-gray-900 py-16">
-  <div class="max-w-screen-xl mx-auto px-4">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Resume</h2>
-    <p class="text-lg mb-6">
-      Below is a brief summary of my education and work experience. For more details, please download my full resume.
-    </p>
-    <div class="space-y-8">
-      <!-- Education -->
-      <div>
-        <h3 class="text-2xl font-semibold">
-          Bachelor's Degree in Computer Science (Software Engineering)
-          <span class="font-normal">– Louisiana State University</span>
-        </h3>
-        <p class="italic">08/2019 – 05/2023</p>
-        <p>GPA: 3.55</p>
-      </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-      <!-- Experience: System Engineer at National Networks -->
-      <div>
-        <h3 class="text-2xl font-semibold">System Engineer at National Networks</h3>
-        <p class="italic">12/2023 – 04/2024</p>
-        <ul class="list-disc ml-6">
-          <li>Managed Windows servers, including user management, permissions, DHCP, and DNS.</li>
-          <li>Implemented backup and recovery solutions for data integrity and operational continuity.</li>
-          <li>Provided comprehensive software and hardware support to clients.</li>
-          <li>Handled networking tasks to ensure optimal connectivity and performance.</li>
-          <li>Administered Microsoft 365 services to maintain smooth operations and accessibility.</li>
-          <li>Strengthened cybersecurity by monitoring and mitigating threats such as phishing, remote access, and malware.</li>
-        </ul>
-      </div>
-
-      <!-- Experience: Information Technology Specialist at Louisiana Pigment -->
-      <div>
-        <h3 class="text-2xl font-semibold">Information Technology Specialist at Louisiana Pigment</h3>
-        <p class="italic">04/2024 – Present</p>
-        <ul class="list-disc ml-6">
-          <li>Oversee the design, implementation, and maintenance of databases to ensure optimal performance and security.</li>
-          <li>Handle the configuration and maintenance of network switches for seamless communication and data transfer.</li>
-          <li>Manage and update software systems to meet company needs and industry standards.</li>
-          <li>Administer and maintain servers to ensure reliable and efficient operation.</li>
-          <li>Develop ASP.NET applications for plant operations, including tracking events, maintenance, and CO₂ levels.</li>
-        </ul>
-      </div>
-
-
-
-    </div>
-  </div>
-</section>
-
-
-<!-- Skills Section -->
-<section id="skills" class="scroll-mt-20 py-16 dark:bg-gray-800">
-  <div class="max-w-screen-xl mx-auto px-4">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Skills</h2>
-    <p class="text-lg mb-6">
-      Here are some of the key technologies and tools I work with:
-    </p>
-    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-      <!-- Existing Skills -->
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">C# / .NET</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">HTML</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">CSS</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">JavaScript</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">React</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Node.js</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">SQL / MySQL</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Firebase</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Cybersecurity</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Windows Server</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Microsoft 365</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Git</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Python</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Java</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">AWS</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Azure</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Linux</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Docker</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">React Native</h3>
-      </div>
-      <div class="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <h3 class="font-semibold">Google Cloud</h3>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- Projects Section -->
-<section id="projects" class="scroll-mt-20 bg-gray-100 dark:bg-gray-900 py-16">
-  <div class="max-w-screen-xl mx-auto px-4">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Projects</h2>
-    <p class="text-lg mb-6">A showcase of some projects I've worked on:</p>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Nexus Music Project -->
-      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-        <h3 class="text-2xl font-semibold mb-2">Nexus Music (Work in Progress)</h3>
-        <p class="mb-4">
-          A self-hosted music streaming platform that empowers users to manage and stream their music collections. Featuring a Go-powered backend, a React-based admin dashboard, and a React Native mobile app, all containerized with Docker for seamless deployment. <span class="font-semibold">In Development</span>.
-        </p>
-        <a href="https://github.com/Drewe4401/Nexus-Music" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
-          View Project
-        </a>
-      </div>
-
-      <!-- DES Encryption and Decryption Project -->
-      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-        <h3 class="text-2xl font-semibold mb-2">DES Encryption and Decryption</h3>
-        <p class="mb-4">
-          A Java program that implements the Data Encryption Standard (DES) algorithm for secure encryption and decryption. Features include XOR operations on binary strings, key generation, and 16 rounds of encryption/decryption.
-        </p>
-        <a href="https://github.com/Drewe4401/DES-Encryption-and-Decrytion" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
-          View Project
-        </a>
-      </div>
-
-      <!-- Exchango Currency Converter Project -->
-      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-        <h3 class="text-2xl font-semibold mb-2">Exchango Currency Converter</h3>
-        <p class="mb-4">
-          A dynamic, real-time currency converter featuring smooth animations and a responsive design. Built with HTML5, Tailwind CSS, and Vanilla JavaScript, it retrieves up-to-date exchange rates from an API and offers an interactive user interface.
-        </p>
-        <a href="https://github.com/Drewe4401/Exchango" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
-          View Project
-        </a>
-        <br>
-        <a href="https://exchango.drewedev.com" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
-          Live Demo
-        </a>
-      </div>
-
-      <!-- Stock Market Predictor Project -->
-      <div class="bg-white dark:bg-gray-700 p-6 rounded shadow">
-        <h3 class="text-2xl font-semibold mb-2">Stock Market Predictor</h3>
-        <p class="mb-4">
-          A machine learning project developed with Python and TensorFlow that predicts stock prices using a Kaggle dataset. The model computes the mean squared error (MSE) to evaluate prediction accuracy, providing insights into market trends.
-        </p>
-        <a href="https://colab.research.google.com/drive/1yPQlghKHkiDv97RLkuiETZPd8JUG-wCg?usp=sharing" target="_blank" rel="noopener noreferrer" class="text-blue-600 dark:text-blue-400 hover:underline">
-          View Project
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-<!-- Notification Div -->
-<div id="notification" class="fixed top-4 right-4 bg-green-500 text-white px-4 py-3 rounded shadow-lg hidden z-50">
-  <span id="notification-text"></span>
-  <button id="notification-close" class="ml-4 text-white focus:outline-none">&times;</button>
-</div>
-
-<!-- Contact Section -->
-<section id="contact" class="scroll-mt-20 py-16 dark:bg-gray-800">
-  <div class="max-w-screen-xl mx-auto px-4">
-    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Contact</h2>
-    <p class="text-lg mb-6">
-      Have questions or want to work together? Fill out the form below or send me an email.
-    </p>
-    <!-- Contact Form -->
-    <form id="contact-form" class="space-y-6">
-      <div>
-        <label for="from_name" class="block text-sm font-medium">Name</label>
-        <input type="text" id="from_name" name="from_name" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your Name" required>
-      </div>
-      <div>
-        <label for="from_email" class="block text-sm font-medium">Email</label>
-        <input type="email" id="from_email" name="from_email" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="you@example.com" required>
-      </div>
-      <div>
-        <label for="message" class="block text-sm font-medium">Message</label>
-        <textarea id="message" name="message" rows="4" class="mt-1 block w-full p-2 border rounded dark:bg-gray-700 dark:border-gray-600" placeholder="Your message here" required></textarea>
-      </div>
-      <!-- Hidden field to set the recipient's name in the email template -->
-      <input type="hidden" name="to_name" value="Andrew">
-      <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition">
-        Send Message
-      </button>
-    </form>
-  </div>
-</section>
-
-    
-  </main>
-
-<!-- Footer -->
-<footer class="bg-gray-800 dark:bg-gray-900 text-white py-8">
-  <div class="max-w-screen-xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
-    <div class="mb-4 md:mb-0">
-      <a href="#landing" class="text-xl font-bold hover:text-blue-400 transition">Andrew's Portfolio</a>
-      <p class="mt-2 text-gray-400">&copy; 2025 All rights reserved.</p>
-    </div>
-    <div class="flex space-x-4">
-      <!-- YouTube Icon -->
-      <a href="https://www.youtube.com/@andrewellender6528" class="text-gray-400 hover:text-white transition" aria-label="YouTube">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M23.498 6.186a2.966 2.966 0 00-2.088-2.1C19.437 3.5 12 3.5 12 3.5s-7.437 0-9.41.586A2.966 2.966 0 00.502 6.186 31.67 31.67 0 000 12a31.67 31.67 0 00.502 5.814 2.966 2.966 0 002.088 2.1c1.973.586 9.41.586 9.41.586s7.437 0 9.41-.586a2.966 2.966 0 002.088-2.1A31.67 31.67 0 0024 12a31.67 31.67 0 00-.502-5.814zM9.75 15.02V8.98l6.5 3.02-6.5 3.02z"/>
-        </svg>
-      </a>
-      <!-- LinkedIn Icon -->
-      <a href="https://www.linkedin.com/in/andrew-e-b87048222" class="text-gray-400 hover:text-white transition" aria-label="LinkedIn">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zM8.337 19h-3.337v-10h3.337v10zm-1.668-11.275c-1.069 0-1.932-.864-1.932-1.933 0-1.069.863-1.933 1.932-1.933 1.068 0 1.932.864 1.932 1.933 0 1.069-.864 1.933-1.932 1.933zm12.331 11.275h-3.337v-5.396c0-1.286-.026-2.942-1.793-2.942-1.793 0-2.066 1.4-2.066 2.847v5.491h-3.337v-10h3.203v1.367h.045c.447-.846 1.537-1.736 3.164-1.736 3.386 0 4.012 2.228 4.012 5.125v4.244z"/>
-        </svg>
-      </a>
-      <!-- GitHub Icon -->
-      <a href="https://github.com/Drewe4401" class="text-gray-400 hover:text-white transition" aria-label="GitHub">
-        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 .5C5.73.5.5 5.73.5 12c0 5.1 3.292 9.42 7.86 10.95.575.106.78-.25.78-.55v-2.1c-3.2.695-3.88-1.55-3.88-1.55-.524-1.33-1.28-1.68-1.28-1.68-1.046-.715.08-.7.08-.7 1.15.08 1.754 1.18 1.754 1.18 1.028 1.76 2.7 1.25 3.36.955.105-.745.402-1.25.732-1.53-2.56-.3-5.255-1.28-5.255-5.69 0-1.255.448-2.28 1.182-3.086-.12-.3-.512-1.52.114-3.165 0 0 .97-.31 3.18 1.18a11.07 11.07 0 012.89-.39c.98.005 1.97.13 2.89.39 2.21-1.49 3.18-1.18 3.18-1.18.626 1.645.234 2.865.114 3.165.735.806 1.182 1.83 1.182 3.086 0 4.42-2.7 5.386-5.265 5.676.41.35.78 1.05.78 2.12v3.15c0 .3.203.66.788.55C20.71 21.42 24 17.1 24 12c0-6.27-5.23-11.5-12-11.5z"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</footer>
-
-
-  <!-- Flowbite JS (for navbar toggle) -->
-  <script src="https://unpkg.com/flowbite@1.6.6/dist/flowbite.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-  
-  <!-- Custom JS for scroll-triggered animations -->
-  <script>
+    <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Set up the Intersection Observer
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // When the section enters the viewport, animate it into view
-            entry.target.classList.add('opacity-100', 'translate-y-0');
-            entry.target.classList.remove('opacity-0', 'translate-y-8');
-          }
+        gsap.registerPlugin(ScrollTrigger);
+
+        // --- Three.js Background ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const particlesGeometry = new THREE.BufferGeometry;
+        const particlesCount = 5000;
+        const posArray = new Float32Array(particlesCount * 3);
+
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 5;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.005,
+            color: 0x38bdf8
         });
-      }, { threshold: 0.2 }); // Adjust threshold as needed
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
 
-      // Apply initial animation classes to all sections and start observing
-      document.querySelectorAll('section').forEach(section => {
-        section.classList.add('opacity-0', 'translate-y-8', 'transition', 'duration-1000', 'ease-out');
-        observer.observe(section);
-      });
+        camera.position.z = 2;
+
+        const clock = new THREE.Clock();
+
+        const animate = () => {
+            const elapsedTime = clock.getElapsedTime();
+            particlesMesh.rotation.y = -0.1 * elapsedTime;
+            renderer.render(scene, camera);
+            requestAnimationFrame(animate);
+        };
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- Custom Cursor ---
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            const { clientX, clientY } = e;
+            gsap.to(cursorDot, { x: clientX, y: clientY, duration: 0.3, ease: 'power2.out' });
+            gsap.to(cursorOutline, { x: clientX - 20, y: clientY - 20, duration: 0.7, ease: 'power2.out' });
+        });
+
+        const interactiveElements = document.querySelectorAll('a, button');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursorOutline, { scale: 1.5, opacity: 0.5, duration: 0.3 });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursorOutline, { scale: 1, opacity: 1, duration: 0.3 });
+            });
+        });
+
+        // --- Mobile Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- Header Shadow on Scroll ---
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-lg', 'shadow-black/20');
+            } else {
+                header.classList.remove('shadow-lg', 'shadow-black/20');
+            }
+        });
+
+        // --- GSAP Animations ---
+        const homeTl = gsap.timeline({ delay: 0.2 });
+        homeTl.from('#home-avatar', { opacity: 0, scale: 0.5, y: 50, duration: 0.8, ease: 'power3.out' })
+              .from('#home-title', { opacity: 0, y: 30, duration: 0.6, ease: 'power3.out' }, '-=0.4')
+              .from('#home-subtitle', { opacity: 0, y: 20, duration: 0.5, ease: 'power3.out' }, '-=0.4')
+              .from('#home-quote', { opacity: 0, y: 20, duration: 0.5, ease: 'power3.out' }, '-=0.3')
+              .from('#home-button', { opacity: 0, y: 20, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3');
+
+        document.querySelectorAll('section').forEach((section) => {
+            const sectionTitle = section.querySelector('.section-title');
+            const sectionSubtitle = section.querySelector('.section-subtitle');
+            
+            if (sectionTitle) {
+                gsap.from(sectionTitle, {
+                    scrollTrigger: { trigger: sectionTitle, start: 'top 85%', toggleActions: 'play none none none' },
+                    opacity: 0, y: 30, duration: 0.8, ease: 'power3.out'
+                });
+            }
+            if (sectionSubtitle) {
+                gsap.from(sectionSubtitle, {
+                    scrollTrigger: { trigger: sectionSubtitle, start: 'top 85%', toggleActions: 'play none none none' },
+                    opacity: 0, y: 20, duration: 0.8, ease: 'power3.out', delay: 0.2
+                });
+            }
+        });
+        
+        gsap.from('#intro > div', {
+            scrollTrigger: { trigger: '#intro', start: 'top 80%', toggleActions: 'play none none none' },
+            opacity: 0, scale: 0.9, duration: 1, ease: 'power3.out'
+        });
+
+        gsap.from('.timeline-item', {
+            scrollTrigger: { trigger: '#resume', start: 'top 70%', toggleActions: 'play none none none' },
+            opacity: 0, x: -50, duration: 0.8, stagger: 0.3, ease: 'power3.out'
+        });
+
+        gsap.from('.skill-card', {
+            scrollTrigger: { trigger: '#skills', start: 'top 70%', toggleActions: 'play none none none' },
+            opacity: 0, y: 40, scale: 0.95, duration: 0.5, stagger: 0.05, ease: 'power2.out'
+        });
+
+        gsap.from('.project-card', {
+            scrollTrigger: { trigger: '#projects', start: 'top 70%', toggleActions: 'play none none none' },
+            opacity: 0, y: 50, duration: 0.7, stagger: 0.2, ease: 'power3.out'
+        });
+        
+        gsap.from('.contact-button', {
+            scrollTrigger: { trigger: '#contact', start: 'top 70%', toggleActions: 'play none none none' },
+            opacity: 0, scale: 0.8, duration: 0.8, ease: 'back.out(1.7)'
+        });
+
+        // --- Scroll to Top Button ---
+        const scrollToTopButton = document.getElementById('scroll-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollToTopButton.classList.remove('opacity-0', 'translate-y-4');
+            } else {
+                scrollToTopButton.classList.add('opacity-0', 'translate-y-4');
+            }
+        });
+        scrollToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- Active Nav Link Highlighting ---
+        const allSections = document.querySelectorAll('main section');
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.5 };
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('header nav a').forEach(link => {
+                        link.parentElement.classList.remove('active');
+                        if (link.getAttribute('href') === `#${id}`) {
+                            link.parentElement.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        allSections.forEach(section => {
+            sectionObserver.observe(section);
+        });
     });
-
-    (function(){
-    emailjs.init("-bIjfq6m-S-TH4YZB"); // Replace with your EmailJS user ID
-  })();
-
-   // Listen for form submission
-   document.getElementById('contact-form').addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent default form submission
-
-    emailjs.sendForm('service_w7xlwz8', 'template_tojp03j', this)
-      .then(function() {
-        showNotification('Message sent successfully!', 'success');
-        document.getElementById('contact-form').reset();
-      }, function(error) {
-        console.error('Failed to send message:', error);
-        showNotification('Oops! Something went wrong. Please try again later.', 'error');
-      });
-  });
-
-  // Function to show the notification
-  function showNotification(message, type) {
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notification-text');
-    notificationText.textContent = message;
-
-    // Change background color based on type (success: green, error: red)
-    if (type === 'success') {
-      notification.classList.remove('bg-red-500');
-      notification.classList.add('bg-green-500');
-    } else {
-      notification.classList.remove('bg-green-500');
-      notification.classList.add('bg-red-500');
-    }
-
-    // Show the notification
-    notification.classList.remove('hidden');
-
-    // Allow manual closing of the notification
-    document.getElementById('notification-close').onclick = function() {
-      notification.classList.add('hidden');
-    };
-
-    // Automatically hide the notification after 3 seconds
-    setTimeout(function() {
-      notification.classList.add('hidden');
-    }, 3000);
-  }
-
-  </script>
+    </script>
 </body>
 </html>
